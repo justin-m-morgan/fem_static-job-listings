@@ -26,6 +26,8 @@ function filterReducer(state, action) {
       return {filters: addUniqueFilter(state.filters, action.payload)};
     case 'remove-filter':
       return {filters: state.filters.filter(f => f != action.payload)};
+    case 'clear-filters':
+      return {filters: []};
     default:
       throw new Error();
   }
@@ -41,6 +43,43 @@ function removeFilter(dispatch) {
     dispatch({type: "remove-filter", payload: filterString})
   }
 }
+function clearFilters(dispatch) {
+  return function() {
+    console.log("Clicked Clear")
+    dispatch({type: "clear-filters"})
+  }
+}
+
+function filter_jobs(jobs, filters) {
+  return filters.length ? jobs.filter(job => job_passes_filters(job, filters)) : jobs
+}
+
+// "Or" filter
+// function job_passes_filters(job, filters) {
+//   return filters.some(filter_applies(job))
+// }
+
+// "And" filter
+function job_passes_filters(job, filters) {
+  return filters.every(filter_applies(job))
+}
+
+function filter_applies(job) {
+  return function(filter) {
+    let {key, value} = mapFilterToObject(filter)
+    let job_value = job[key]
+    if (Array.isArray(job_value)) {
+      return job_value.includes(value)
+    } else {
+      return job_value == value
+    }
+  }
+}
+
+function mapFilterToObject(filterString) {
+  let [key, value] = filterString.split("|")
+  return {key, value}
+}
 
 export default function Home() {
   const [state, dispatch] = useReducer(filterReducer, initialFilters)
@@ -48,14 +87,16 @@ export default function Home() {
   return (
     <Container>
       <Head>
-        <title>Create Next App</title>
+        <title>Jobarama</title>
         <link rel="icon" href="/images/favicon-32x32.png" />
       </Head>
-        <Header filters={state.filters} removeFilter={removeFilter(dispatch)}/>
+        <Header filters={state.filters} removeFilter={removeFilter(dispatch)} clearFilters={clearFilters(dispatch)}/>
         <Body>
         <ul className="space-y-16 mt-8 lg:mt-0 lg:space-y-6">
-        {jobPosts.map(job => (
+        {filter_jobs(jobPosts, state.filters).map(job => (
+          <li>
           <JobCard key={job.id} job={job} addFilter={addFilter(dispatch)}/>
+          </li>
         ))}
         </ul>
         </Body>

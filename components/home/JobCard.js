@@ -1,15 +1,17 @@
-// {% if job.featured %}border-transparent border-l-primary-dark border-4  {% endif %}
+import classNames from "classnames"
 
 export default function JobCard({ job, addFilter }) {
   return (
-    <li className="relative rounded-lg shadow-primaryGlow lg:flex lg:justify-between">
-      <div className={`px-6 pt-10 pb-4 lg:pb-10 lg:flex lg:justify-between w-full ${job.new ? "border-transparent border-l-primary-dark border-4" : ""}`}>
+    <div className="relative rounded-lg shadow-primaryGlow lg:flex lg:justify-between w-full">
+      <FlourishNewJob job={job} />
+
+      <div className={"px-6 pt-10 pb-4 lg:pb-10 lg:flex lg:justify-between w-full"}>
         <div className="lg:flex lg:space-x-6 lg:items-center">
           <CompanyImage job={job} />
           <JobDescription job={job} />
         </div>
-        <hr class="border-gray-400 my-4 lg:hidden" />
-        <div class="lg:ml-auto flex flex-wrap justify-start lg:items-start lg:justify-end text-primary-dark font-bold">
+        <hr className="border-gray-400 my-4 lg:hidden" />
+        <div className="lg:ml-auto flex flex-wrap justify-start lg:items-start lg:justify-end text-primary-dark font-bold">
           <DetailPill key={job.role} filter_key="role" text={job.role} addFilter={addFilter} />
           <DetailPill key={job.level} filter_key="level" text={job.level} addFilter={addFilter} />
           {job.languages.map(language =>
@@ -21,14 +23,21 @@ export default function JobCard({ job, addFilter }) {
 
         </div>
       </div>
-    </li>
+    </div>
   )
+}
+
+function FlourishNewJob({job}) {
+  return (
+  <div className="rounded-lg overflow-hidden absolute top-0 left-0 bottom-0 w-3">
+        { job.new && <div className="absolute -left-2 w-3 top-0 bottom-0 bg-primary-dark"></div>}
+  </div>)
 }
 
 function JobDescription({ job }) {
   return (
     <div>
-      <div class="flex items-center space-x-2 font-bold">
+      <div className="flex items-center space-x-2 font-bold">
         <CompanyName job={job} />
         {job.new && <TagPill key="new" value={true} text="New!" color_class="bg-primary-dark" />}
         {job.featured && <TagPill key="featured" value={true} text="Featured" color_class="bg-neutral-dark" />}
@@ -48,32 +57,50 @@ function CompanyImage({ job }) {
 
 function CompanyName({ job }) {
   return (
-    <p class="text-primary-dark text-md pr-4 text-sm">{job.company}</p>
+    <p className="text-primary-dark text-md pr-4 text-sm">{job.company}</p>
   )
 }
 
 function TagPill({ text, color_class }) {
   return (
-    <span className={"inline-block font-bold uppercase text-gray-50 rounded-full px-3 py-1 text-xs " + color_class}>{text}</span>
+    <span className={classNames(
+      "align-middle",
+      "px-2 py-1",
+      "rounded-full",
+      "font-bold uppercase text-gray-50 text-xs",
+      color_class
+    )}
+    >{text}</span>
   )
 }
 function DetailPill({ filter_key, text, addFilter }) {
   return (
     <button onClick={() => addFilter(filter_key, text)}>
-    <span class="inline-block px-2 py-1 font-bold bg-primary-dark bg-opacity-10 rounded mr-3 mb-3">{text}</span>
+    <span className={classNames(
+      "inline-block",
+      "px-2 py-1",
+      "mr-3 mb-3",
+      "bg-primary-dark bg-opacity-10 hover:bg-primary-dark hover:text-neutral-faint",
+      "rounded",
+      "font-bold")}
+      >{text}</span>
     </button>
   )
 }
 
 function JobPosition({ job }) {
   return (
-    <p class="font-bold py-2 text-md">{job.position}</p>
+    <a href="#" className={classNames(
+      "inline-block",
+      "py-2",
+      "font-bold tracking-wide text-md hover:text-primary-dark"
+      )}>{job.position}</a>
   )
 }
 function JobDetails({ job }) {
   return (
 
-    <div class="flex space-x-2 text-gray-400 font-semibold text-sm">
+    <div className="flex space-x-2 text-gray-400 text-sm">
       <p>{job.postedAt}</p>
       <span>&bull;</span>
       <p>{job.contract}</p>

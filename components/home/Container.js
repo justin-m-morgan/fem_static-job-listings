@@ -1,6 +1,6 @@
 export default function Container({ children }) {
   return (
-    <div className="w-full min-h-screen" >
+    <div className="w-full min-h-screen bg-neutral-faint" >
       {children}
     </div>
   )
