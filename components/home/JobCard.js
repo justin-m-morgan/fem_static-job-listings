@@ -2,7 +2,12 @@ import classNames from "classnames"
 
 export default function JobCard({ job, addFilter }) {
   return (
-    <div className="relative rounded-lg shadow-primaryGlow lg:flex lg:justify-between w-full">
+    <div className={classNames(
+      "w-full",
+      "relative lg:flex lg:justify-between",
+      "rounded-lg shadow-primaryGlow",
+      "bg-neutral-faint"
+    )}>
       <FlourishNewJob job={job} />
 
       <div className={"px-6 pt-10 pb-4 lg:pb-10 lg:flex lg:justify-between w-full"}>

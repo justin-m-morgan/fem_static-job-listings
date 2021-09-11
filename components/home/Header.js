@@ -2,12 +2,14 @@ import classNames from "classnames"
 
 export default function Header({ filters, removeFilter, clearFilters }) {
   return (
-    <header className="px-6 lg:px-16 bg-header-mobile lg:bg-header-desktop bg-cover bg-primary-dark min-h-[150px] flex flex-col justify-end">
+    <header className="px-6 lg:px-16 bg-header-mobile lg:bg-header-desktop bg-cover bg-primary-dark min-h-[150px] flex justify-center items-end">
       <aside className={classNames(
+        "flex-1",
         "flex",
+        "max-w-4xl",
         "py-6 px-12 pl-6",
         "opacity-0",
-        "bg-neutral-light shadow-primaryGlow",
+        "bg-neutral-faint shadow-primaryGlow",
         "rounded-lg",
         "transform translate-y-16 md:translate-y-8 lg:translate-y-10",
         "transition-opacity duration-200",

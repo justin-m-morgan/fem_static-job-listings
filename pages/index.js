@@ -7,8 +7,7 @@ import jobPosts from "../jobPosts.json"
 import Container from "../components/home/Container"
 import Header from "../components/home/Header"
 import Body from "../components/home/Body"
-import JobCard from "../components/home/JobCard"
-import Filter from "../components/home/Filter"
+
 
 
 const initialFilters = {filters: []};
@@ -90,15 +89,10 @@ export default function Home() {
         <title>Jobarama</title>
         <link rel="icon" href="/images/favicon-32x32.png" />
       </Head>
+
         <Header filters={state.filters} removeFilter={removeFilter(dispatch)} clearFilters={clearFilters(dispatch)}/>
-        <Body>
-        <ul className="space-y-16 mt-8 lg:mt-0 lg:space-y-6">
-        {filter_jobs(jobPosts, state.filters).map(job => (
-          <li>
-          <JobCard key={job.id} job={job} addFilter={addFilter(dispatch)}/>
-          </li>
-        ))}
-        </ul>
+        <Body addFilter={addFilter(dispatch)} jobPosts={filter_jobs(jobPosts, state.filters)}>
+
         </Body>
       </Container>
 
