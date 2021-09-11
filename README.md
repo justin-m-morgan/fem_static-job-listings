@@ -37,7 +37,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Frontend Mentors](https://your-solution-url.com)
+- Solution URL: [Frontend Mentors](https://www.frontendmentor.io/solutions/nextjs-job-board-IvJIaGt5s)
 - Live Site URL: [Hosted on Vercel](https://fem-static-job-listings-8lxpgh5ye-justin-m-morgan.vercel.app)
 
 ## My process

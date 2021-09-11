@@ -4,9 +4,9 @@ export default function JobCard({ job, addFilter }) {
   return (
     <div className={classNames(
       "w-full",
+      "bg-neutral-faint",
       "relative lg:flex lg:justify-between",
-      "rounded-lg shadow-primaryGlow",
-      "bg-neutral-faint"
+      "rounded-lg shadow-primaryGlow"
     )}>
       <FlourishNewJob job={job} />
 
